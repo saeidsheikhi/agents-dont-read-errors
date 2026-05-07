@@ -1,0 +1,262 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "agents-dont-read-errors-trajectories",
+  "description": "Trial trajectories from a counterfactual evaluation of error-message reading in tool-using LLM agents. 2,600 trials across four open-weight models (Mistral-7B, Llama-3.1-8B, Qwen2.5-14B, Qwen3-14B) on the MBPP-sanitized benchmark, under four error-content conditions (Real, Scrambled, Misleading, Empty). Each record contains the full agent trajectory (turns, tool calls, errors, recoveries), per-trial metrics (ERR, ECR, success), and the error-substitution metadata for that condition.",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "citeAs": "Anonymous Authors. Agents Don't Read Errors: Counterfactual Scrambling for Testing Error-Message Use in Tool-Using LLMs. NeurIPS 2026 Evaluations and Datasets Track (under review).",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "url": "https://github.com/<YOUR-GITHUB-USER>/agents-dont-read-errors-neurips2026",
+  "version": "1.0.0",
+  "keywords": [
+    "tool-using LLM agents",
+    "error recovery",
+    "counterfactual evaluation",
+    "MBPP",
+    "agent benchmarking",
+    "reasoning models"
+  ],
+  "rai:dataCollection": "Trajectories were collected by running each of four open-weight LLMs (served via Ollama) on 100 MBPP-sanitized programming tasks under four error-content conditions. The tool environment intercepts tool errors and substitutes the message body according to the assigned condition before returning to the agent. All inference was deterministic (temperature=0).",
+  "rai:dataCollectionTimeframe": "April 2026",
+  "rai:dataCollectionType": "synthetic-from-LLM",
+  "rai:dataAnnotationProtocol": "No human annotation. Per-trial task success was scored by an automated unit-test runner using the canonical MBPP test cases.",
+  "rai:dataReleaseMaintenancePlan": "Released as a single tagged release on the anonymized GitHub repository. We do not plan ongoing updates; the dataset corresponds to a fixed experimental run reported in the paper.",
+  "rai:dataLimitations": "Limited to MBPP-sanitized (Python coding tasks); four open-weight models up to 14B parameters; no proprietary frontier models. Qwen3-14B engaged with the tool environment on only ~42% of trials, so per-cell sample sizes are smaller for that model. Scrambling preserves token length and structural cues but cannot guarantee that all latent semantic signal is removed.",
+  "rai:dataSocialImpact": "Findings inform deployment of reasoning-tuned LLMs as agents but do not present novel capabilities or deployment risks. The dataset contains only model outputs on public coding problems and presents no privacy concerns.",
+  "rai:dataBiases": "The MBPP-sanitized benchmark consists of short Python programming problems and may not reflect agent behavior on long-context or domain-specific code. The four models are open-weight only and do not represent the full population of deployed LLM agents.",
+  "rai:personalSensitiveInformation": "None. Trajectories contain only model outputs on public benchmark problems.",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "trajectories-original",
+      "name": "20260428T081951Z-06f3bf77_results.jsonl",
+      "description": "Original sweep: Mistral-7B, Qwen2.5-14B, Qwen3-14B (1024-token budget) on MBPP and GAIA, 1,800 trials.",
+      "contentUrl": "data/20260428T081951Z-06f3bf77_results.jsonl",
+      "encodingFormat": "application/x-ndjson",
+      "sha256": "5b6f6344f808cf347add6946191ea2c09f0373debb84df014a454c87d3e1f14c"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "trajectories-qwen3-replication",
+      "name": "20260428T174000Z-6e3d244c_results.jsonl",
+      "description": "Qwen3-14B replication run at 8,192-token budget, 400 trials.",
+      "contentUrl": "data/20260428T174000Z-6e3d244c_results.jsonl",
+      "encodingFormat": "application/x-ndjson",
+      "sha256": "247f3017d221eda2006606d25907d12b40a550ba6fe21d431c5ca8cab5153dcc"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "trajectories-llama",
+      "name": "20260428T214430Z-759dec7b_results.jsonl",
+      "description": "Llama-3.1-8B run, 400 trials on MBPP.",
+      "contentUrl": "data/20260428T214430Z-759dec7b_results.jsonl",
+      "encodingFormat": "application/x-ndjson",
+      "sha256": "c8b1b11a36e9bb60e441d9ca938d33e69efc9526007f5bbdf8cdbb4243c11cd8"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "trials",
+      "name": "trials",
+      "description": "One record per agent trial. Each record is a complete agent trajectory plus per-trial metrics and the experimental context (model, condition, task).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "trials/status",
+          "name": "status",
+          "description": "Trial status. 'ok' means the trial completed (with or without solving the task); 'failed' means the platform errored out.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "trajectories-original"
+            },
+            "extract": {
+              "jsonPath": "$.status"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "trials/model",
+          "name": "context.model",
+          "description": "Model identifier: mistral_7b, llama3_1_8b, qwen2_5_14b, qwen3_14b.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "trajectories-original"
+            },
+            "extract": {
+              "jsonPath": "$.context.model"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "trials/condition",
+          "name": "context.condition",
+          "description": "Counterfactual error-content condition: real, scrambled_plausible, misleading, empty.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "trajectories-original"
+            },
+            "extract": {
+              "jsonPath": "$.context.condition"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "trials/task_id",
+          "name": "context.task_id",
+          "description": "Task identifier (e.g., mbpp-130).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "trajectories-original"
+            },
+            "extract": {
+              "jsonPath": "$.context.task_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "trials/dataset",
+          "name": "context.dataset",
+          "description": "Source benchmark: mbpp or gaia_validation. Primary analysis uses mbpp only.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "trajectories-original"
+            },
+            "extract": {
+              "jsonPath": "$.context.dataset"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "trials/task_success",
+          "name": "metrics.task_success",
+          "description": "1.0 if the agent's final answer passed all unit tests for the task; 0.0 otherwise.",
+          "dataType": "sc:Float",
+          "source": {
+            "fileObject": {
+              "@id": "trajectories-original"
+            },
+            "extract": {
+              "jsonPath": "$.metrics.task_success"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "trials/err",
+          "name": "metrics.err",
+          "description": "Error Recovery Rate for this trial: n_recoveries / n_errors. Null when n_errors = 0.",
+          "dataType": "sc:Float",
+          "source": {
+            "fileObject": {
+              "@id": "trajectories-original"
+            },
+            "extract": {
+              "jsonPath": "$.metrics.err"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "trials/n_errors",
+          "name": "metrics.n_errors",
+          "description": "Count of tool-error turns in the trajectory.",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "trajectories-original"
+            },
+            "extract": {
+              "jsonPath": "$.metrics.n_errors"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "trials/n_recoveries",
+          "name": "metrics.n_recoveries",
+          "description": "Count of error-turns immediately followed by a successful tool call.",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "trajectories-original"
+            },
+            "extract": {
+              "jsonPath": "$.metrics.n_recoveries"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "trials/trajectory_turns",
+          "name": "trajectory.turns",
+          "description": "List of turns in the agent trajectory. Each turn has a kind (system, user, assistant, tool_call, tool_result, tool_error), tool_name, tool_args, content, and metadata. For tool_error turns, the substituted (visible-to-agent) content is stored in 'content' and the original error is stored in 'original_error'.",
+          "dataType": "sc:Text",
+          "repeated": true,
+          "source": {
+            "fileObject": {
+              "@id": "trajectories-original"
+            },
+            "extract": {
+              "jsonPath": "$.trajectory.turns[*]"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

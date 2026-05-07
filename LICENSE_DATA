@@ -1,0 +1,32 @@
+Attribution 4.0 International (CC BY 4.0) — applies to data/
+
+Copyright (c) 2026 Anonymous Authors (NeurIPS 2026 submission, under review)
+
+You are free to:
+
+  Share — copy and redistribute the material in any medium or format
+  Adapt — remix, transform, and build upon the material for any purpose,
+          even commercially.
+
+Under the following terms:
+
+  Attribution — You must give appropriate credit, provide a link to the
+  license, and indicate if changes were made. You may do so in any
+  reasonable manner, but not in any way that suggests the licensor
+  endorses you or your use.
+
+  No additional restrictions — You may not apply legal terms or
+  technological measures that legally restrict others from doing
+  anything the license permits.
+
+Full license text:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Note on model-output redistribution: the trajectories in data/ were
+produced by inference on Mistral-7B (Apache 2.0), Llama-3.1-8B (Llama
+3.1 Community License), Qwen2.5-14B and Qwen3-14B (Tongyi Qianwen
+License). Users redistributing or training on these trajectories are
+responsible for complying with each model's terms regarding output
+use. The CC-BY-4.0 license above applies only to the dataset
+compilation, structure, and metadata, not to the underlying model
+outputs themselves.
